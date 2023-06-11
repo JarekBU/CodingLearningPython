@@ -12,7 +12,7 @@ st.set_page_config(
   page_title="PierwszeApkawStreamlit",
   page_icon=im)
 
-
+###############################################################################################################################################
 #ukrywanie opcji z górnego prawego rogu i 
 hide_default_format = """
        <style>
@@ -33,26 +33,31 @@ feederwatch  = load_data("https://raw.githubusercontent.com/rfordatascience/tidy
 
 st.title("Mój pierwsza apka w streamlit")
 
+#############################################################################################################################################
 #tutaj musimy znaleśc rozwiązania na tworzenie bocznego paska na kilka filtrów lub informacji
 with st.sidebar:
   st.button("Weś nie pytaj weś klikaj")
   radio = st.radio("Wybierz Rok"
            , options=[2020, 2021]
            , horizontal= True)
-  
-#left, right = st.columns(2,1)
+
+
+
+############################################################################################################################################
+feederwatch = feederwatch.fillna(0)
+
+############################################################################################################################################
+
+left, right = st.columns(2)
+
+with left:
+  st.bar_chart(feederwatch, x='species_code', y='how_many', use_container_width=True)
+
+with right:
+  st.line_chart(feederwatch, x='Month', y='how_many', use_container_width=True) 
+
 
 #tabele pod spodem 
-feederwatch.filter(
-    items=["Year"
-           , "Month"
-           , "Day"
-           , "entry_technique"
-           , "how_many"
-           , "valid"
-           , "reviewed"
-           , "Data_Entry_Method"])
-
 if radio == 2021:
   st.dataframe(feederwatch.query('Year == 2021'))
 else:
