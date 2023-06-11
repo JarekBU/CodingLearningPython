@@ -2,8 +2,6 @@ import streamlit as st
 import pandas as pd
 from PIL import Image
 
-feederwatch  = pd.read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2023/2023-01-10/PFW_2021_public.csv")
-site_data = pd.read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2023/2023-01-10/PFW_count_site_data_public_2021.csv")
 
 #dodawanie ikony do nazwy stronyw przeglądarce
 im = Image.open('signpost.png')
@@ -23,6 +21,14 @@ hide_default_format = """
        </style>
        """
 st.markdown(hide_default_format, unsafe_allow_html=True)
+
+#cashpwanie danych w prosty sposób czyli poprzes stowrzenie funkcji
+@st.cache_data
+def load_data(url):
+  df = pd.read_csv(url)
+  return df
+
+feederwatch  = load_data("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2023/2023-01-10/PFW_2021_public.csv")
 
 
 st.title("Mój pierwsza apka w streamlit")
